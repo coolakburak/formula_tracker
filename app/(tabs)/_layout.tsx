@@ -20,7 +20,7 @@ export default function TabLayout() {
           backgroundColor: '#1b1b26',
           borderTopColor: 'gray',
           borderTopWidth: 1,
-          height: height * 0.15,
+          height: height * 0.12,
         },
         tabBarIconStyle: { marginBottom: iconMargin },
         tabBarLabelStyle: { fontSize: labelFontSize },
