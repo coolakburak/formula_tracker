@@ -11,7 +11,8 @@ export const Container: React.FC<ContainerProps> = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
+    flexGrow: 1,
+    paddingTop: 20,
     paddingHorizontal: 10,
     backgroundColor: '#000',
   },
