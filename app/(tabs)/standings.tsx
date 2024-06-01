@@ -1,11 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
-import { View, FlatList, StyleSheet, Dimensions } from 'react-native';
-import { Container, DriverCard } from '~/components';
-import { fetchDrivers } from '~/api/get';
-import { DriverRanking } from '~/types/driverRanking.types';
-import LottieView from 'lottie-react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+// Components
+import { Container, DriverCard } from '~/components';
+
+// Api
+import { fetchDrivers } from '~/api/get';
+
+// Types
+import { DriverRanking } from '~/types/driverRanking.types';
+
+// Animation
+import LottieView from 'lottie-react-native';
 
 const Standings = () => {
   const [drivers, setDrivers] = useState<DriverRanking[]>([]);
