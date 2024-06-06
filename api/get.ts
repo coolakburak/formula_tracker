@@ -29,19 +29,18 @@ export const fetchDrivers = async (): Promise<Root | undefined> => {
   }
 };
 
-const circuitOptions = {
-  method: 'GET',
-  url: `${baseUrl}/circuits`,
-  headers: {
-    'x-rapidapi-key': API_KEY,
-    'x-rapidapi-host': API_HOST,
-  },
-};
-
 export const fetchCircuits = async (): Promise<CircuitRoot | undefined> => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/circuits`,
+    headers: {
+      'x-rapidapi-key': API_KEY,
+      'x-rapidapi-host': API_HOST,
+    },
+  };
   try {
-    const response = await axios.request<CircuitRoot>(circuitOptions);
-    
+    const response = await axios.request<CircuitRoot>(options);
+
     return response.data;
   } catch (error) {
     throw error;
