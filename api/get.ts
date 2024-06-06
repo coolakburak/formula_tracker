@@ -47,6 +47,27 @@ export const fetchCircuits = async (): Promise<CircuitRoot | undefined> => {
   }
 };
 
+
+export const fetchCircuitsById = async (id: string): Promise<CircuitRoot | undefined> => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/circuits`,
+    params: { id },
+    headers: {
+      'x-rapidapi-key': API_KEY,
+      'x-rapidapi-host': API_HOST,
+    },
+  };
+  try {
+    const response = await axios.request<CircuitRoot>(options);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+
+}
+
 export const fetchDriverById = async (id: string): Promise<DetailRoot | undefined> => {
   const options = {
     method: 'GET',
