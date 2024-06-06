@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, Pressable } from 'react-native';
 
 // Components
 import { Container, DriverCard } from '~/components';
@@ -13,10 +13,14 @@ import { DriverRanking } from '~/types/driverRanking.types';
 // Animation
 import LottieView from 'lottie-react-native';
 
+// Navigation
+import { useRouter } from 'expo-router';
+
 const Standings = () => {
   const [drivers, setDrivers] = useState<DriverRanking[]>([]);
   const [loading, setLoading] = useState(true);
   const animation = useRef<LottieView>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
@@ -54,15 +58,17 @@ const Standings = () => {
       <FlatList
         data={drivers}
         renderItem={({ item, index }) => (
-          <DriverCard
-            key={item?.driver?.id}
-            name={item?.driver?.name}
-            number={item?.driver?.number}
-            team={item?.team}
-            image={item?.driver?.image}
-            teamLogo={item?.team?.logo}
-            index={index}
-          />
+          <Pressable onPress={() => router.push(`/driver/${item?.driver?.id}`)}>
+            <DriverCard
+              key={item?.driver?.id}
+              name={item?.driver?.name}
+              number={item?.driver?.number}
+              team={item?.team}
+              image={item?.driver?.image}
+              teamLogo={item?.team?.logo}
+              index={index}
+            />
+          </Pressable>
         )}
         contentContainerStyle={{ alignItems: 'center' }}
         ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
