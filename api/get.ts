@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '~/config/config';
+import { CircuitRoot } from '~/types/circuits.types';
 
 // Driver Ranking Types
 import { DriverRanking, Root } from '~/types/driverRanking.types';
@@ -22,6 +23,24 @@ export const fetchDrivers = async (): Promise<Root | undefined> => {
   };
   try {
     const response = await axios.request<Root>(options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchCircuits = async (): Promise<CircuitRoot | undefined> => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/circuits`,
+    headers: {
+      'x-rapidapi-key': API_KEY,
+      'x-rapidapi-host': API_HOST,
+    },
+  };
+  try {
+    const response = await axios.request<CircuitRoot>(options);
+
     return response.data;
   } catch (error) {
     throw error;
