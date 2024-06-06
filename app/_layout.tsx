@@ -9,6 +9,13 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="driver/[id]"
+        options={{
+          headerTintColor: '#fff',
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
