@@ -20,17 +20,16 @@ const CircuitDetails = () => {
 
   return (
     <View key={circuit?.id} style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: circuit?.image }} width={300} height={300} resizeMode="contain" />
-      </View>
       <Text style={styles.circuitName}>{circuit?.name}</Text>
-      <Text style={styles.circuitText}>{circuit?.first_grand_prix}</Text>
-      <Text style={styles.circuitText}>Laps {circuit?.laps}</Text>
-      <Text style={styles.circuitText}>Length {circuit?.length}</Text>
-      <Text style={styles.circuitText}>Race Distance {circuit?.race_distance}</Text>
-      <Text style={styles.circuitText}>Circuit Capacity {circuit?.capacity}</Text>
-      <Text style={styles.circuitText}>Opened in {circuit?.opened}</Text>
-      <Text style={styles.circuitText}>Owner {circuit?.owner}</Text>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: circuit?.image }} width={500} height={350} resizeMode="contain" />
+      </View>
+      <View style={styles.descriptionContainer}>
+        <Text style={styles.circuitText}>Laps {circuit?.laps}</Text>
+        <Text style={styles.circuitText}>Length {circuit?.length}</Text>
+        <Text style={styles.circuitText}>Race Distance {circuit?.race_distance}</Text>
+        <Text style={styles.circuitText}>Opened in {circuit?.opened}</Text>
+      </View>
     </View>
   );
 };
@@ -46,10 +45,20 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#333',
     borderRadius: 30,
-    width: '70%',
-    left: '15%',
+    width: '95%',
+    left: '2.5%',
+  },
+  descriptionContainer: {
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 40,
+    flexDirection: 'row',
+    gap: 10,
+    flex: 1,
+    flexWrap: 'wrap',
+    backgroundColor: '#333',
   },
   circuitName: {
     fontSize: 20,
@@ -60,5 +69,8 @@ const styles = StyleSheet.create({
   circuitText: {
     color: '#fff',
     textAlign: 'center',
+    borderLeftColor: '#fff',
+    borderLeftWidth: 1,
+    fontSize: 16,
   },
 });
