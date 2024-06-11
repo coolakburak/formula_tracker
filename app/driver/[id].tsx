@@ -132,14 +132,13 @@ const DriverDetails = () => {
       setLoading(true);
       fetchDriverById(id).then((data) => {
         if (data) {
-          const driverData = data.response[0];
-      console.log(data)
+          const driverData = data?.response[0];
 
           setDriver(driverData);
 
-          const teamData = driverData.teams.find((team) => team.season.toString() === '2023');
+          const teamData = driverData?.teams?.find((team) => team?.season?.toString() === '2023');
           if (teamData) {
-            setTeam(teamData.team);
+            setTeam(teamData?.team);
           }
 
           setLoading(false);
@@ -147,6 +146,8 @@ const DriverDetails = () => {
       });
     }
   }, [id]);
+
+  const teamColor = teamColors[team?.name || ''] || '#DC0000';
 
   return (
     <View style={styles.container}>
@@ -161,17 +162,12 @@ const DriverDetails = () => {
           />
         </View>
       ) : (
-        <View
-          style={[
-            styles.header,
-            { backgroundColor: team ? teamColors[team.name] : '#DC0000' },
-          ]}
-        >
+        <View style={[styles.header, { backgroundColor: teamColor }]}>
           <View style={styles.logoContainer}>
             {team && <ImageBackground style={styles.logo} source={{ uri: team.logo }} />}
           </View>
 
-          <Text style={{ color: 'white' }}>{driver?.name}</Text>
+          <Text style={{ color: '#fff' }}>{driver?.name}</Text>
         </View>
       )}
     </View>
