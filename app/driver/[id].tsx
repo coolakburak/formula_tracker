@@ -100,7 +100,7 @@
 // });
 
 // export default DriverDetails;
-import { View, Text, StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ImageBackground, Image } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 
 // Navigation
@@ -164,10 +164,31 @@ const DriverDetails = () => {
       ) : (
         <View style={[styles.header, { backgroundColor: teamColor }]}>
           <View style={styles.logoContainer}>
-            {team && <ImageBackground style={styles.logo} source={{ uri: team.logo }} />}
+            {team && <ImageBackground style={styles.logo}  resizeMode='contain' source={{ uri: team.logo }}  />}
           </View>
-
-          <Text style={{ color: '#fff' }}>{driver?.name}</Text>
+          <View style={styles.driverContainer}>
+            <View style={styles.driverInfo}>
+              <Text style={styles.driverNumber}>{driver?.number}</Text>
+              <Text style={styles.driverName}>{driver?.name}</Text>
+            </View>
+            <View>
+              <Image
+                style={styles.driverPhoto}
+                source={{ uri: driver?.image }}
+                resizeMode="cover"
+                height={160}
+                width={140}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={{ color: 'white' }}>Since Debut</Text>
+            <View>
+              <Text style={{ color: 'white' }}>{driver?.career_points}</Text>
+              <Text style={{ color: 'white' }}>{driver?.podiums}</Text>
+              <Text style={{ color: 'white' }}>{driver?.world_championships}</Text>
+            </View>
+          </View>
         </View>
       )}
     </View>
@@ -204,9 +225,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: '100%',
-    height: '100%',
+    width: 300,
+    height: 300,
     resizeMode: 'contain',
+    top:120,
+    opacity: 0.3,
+    
+  },
+  driverContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: width * 0.9,
+    height: height * 0.3,
+  },
+  driverInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 40,
+  },
+  driverName: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+    flexDirection: 'column',
+    width: '45%',
+  },
+  driverNumber: {
+    color: 'white',
+    fontSize: 70,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  driverPhoto: {
+    width: 140,
+    height: 160,
+    borderRadius: 10,
+    bottom: 12,
+    right: 20,
   },
 });
 
