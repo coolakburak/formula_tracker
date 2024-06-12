@@ -11,11 +11,11 @@ import { DriverDetail, DetailRoot } from '~/types/driverDetails.types';
 const API_KEY = process.env.EXPO_PUBLIC_FORMULA_API_KEY;
 const API_HOST = 'api-formula-1.p.rapidapi.com';
 
-export const fetchDrivers = async (): Promise<Root | undefined> => {
+export const fetchDrivers = async (season: string): Promise<Root | undefined> => {
   const options = {
     method: 'GET',
     url: `${baseUrl}/rankings/drivers`,
-    params: { season: '2023' },
+    params: { season: season },
     headers: {
       'x-rapidapi-key': API_KEY,
       'x-rapidapi-host': API_HOST,
@@ -47,7 +47,6 @@ export const fetchCircuits = async (): Promise<CircuitRoot | undefined> => {
   }
 };
 
-
 export const fetchCircuitsById = async (id: string): Promise<CircuitRoot | undefined> => {
   const options = {
     method: 'GET',
@@ -65,8 +64,7 @@ export const fetchCircuitsById = async (id: string): Promise<CircuitRoot | undef
   } catch (error) {
     throw error;
   }
-
-}
+};
 
 export const fetchDriverById = async (id: string): Promise<DetailRoot | undefined> => {
   const options = {

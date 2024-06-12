@@ -1,104 +1,3 @@
-// import { View, Text, StyleSheet, Dimensions, Image, ImageBackground } from 'react-native';
-// import { useEffect, useState, useRef } from 'react';
-
-// // Navigation
-// import { useLocalSearchParams } from 'expo-router';
-
-// // Api
-// import { fetchDriverById } from '~/api/get';
-
-// // Types
-// import { DriverDetail, Team, Team2 } from '~/types/driverDetails.types';
-
-// // Animation
-// import LottieView from 'lottie-react-native';
-// import { teamColors } from '~/constants/TeamColors';
-
-// const { height, width } = Dimensions.get('window');
-
-// const DriverDetails = () => {
-//   const { id } = useLocalSearchParams<{ id: string }>();
-//   const animation = useRef<LottieView>(null);
-//   const [driver, setDriver] = useState<DriverDetail | undefined>();
-//   const [team, setTeam] = useState<Team2 | undefined>();
-//   const [season, setSeason] = useState<Team | undefined>();
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     if (id) {
-//       setLoading(true);
-//       fetchDriverById(id).then((data) => {
-//         if (data) {
-//           setDriver(data?.response[0]);
-//           console.log(data.response[0].teams[0].team.logo);
-
-//           if (data?.response[0]?.teams?.filter((team) => team.season?.toString() === '2023')) {
-//             setTeam(
-//               data?.response[0]?.teams?.filter((team) => team.season?.toString() === '2023')[0].team
-//             );
-//           }
-//           setLoading(false);
-//         }
-//       });
-//     }
-//   }, []);
-
-//   return (
-//     <View style={styles.container}>
-//       {loading && (
-//         <View style={styles.animationContainer}>
-//           <LottieView
-//             ref={animation}
-//             loop
-//             autoPlay
-//             style={styles.animation}
-//             source={require('~/assets/animations/checkered-flag.json')}
-//           />
-//         </View>
-//       )}
-//       <View style={styles.header}>
-//         <View style={styles.logoContainer}>
-//           {team && <ImageBackground style={styles.logo} source={{ uri: team?.logo }} />}
-//         </View>
-
-//         <Text style={{ color: 'white' }}>{driver?.name}</Text>
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#000',
-//   },
-//   header: {
-//     width,
-//     height: height * 0.3,
-//   },
-//   animationContainer: {
-//     flex: 1,
-//     width: 250,
-//     height: 250,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     alignSelf: 'center',
-//   },
-//   animation: {
-//     width: '100%',
-//     height: '100%',
-//   },
-//   logoContainer: {
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     backgroundColor: teamColors['Mercedes'] || '#DC0000',
-//   },
-//   logo: {
-//     width: '100%',
-//     height: '100%',
-//   },
-// });
-
 // export default DriverDetails;
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
@@ -118,13 +17,17 @@ import LottieView from 'lottie-react-native';
 // Team Colors
 import { teamColors } from '~/constants/TeamColors';
 
+// Picker
+import SelectDropdown from 'react-native-select-dropdown';
+
 const { height, width } = Dimensions.get('window');
 
 const DriverDetails = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, season } = useLocalSearchParams<{ id: string; season: string }>();
   const animation = useRef<LottieView>(null);
   const [driver, setDriver] = useState<DriverDetail | undefined>();
   const [team, setTeam] = useState<Team2 | undefined>();
+  const [seasons, setSeasons] = useState<Team | undefined>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -136,7 +39,13 @@ const DriverDetails = () => {
 
           setDriver(driverData);
 
-          const teamData = driverData?.teams?.find((team) => team?.season?.toString() === '2023');
+          const selectedSeason = driverData?.teams?.find(
+            (team) => team?.season?.toString() === season
+          );
+
+          setSeasons(selectedSeason);
+
+          const teamData = driverData?.teams?.find((team) => team?.season?.toString() === '2024');
           if (teamData) {
             setTeam(teamData?.team);
           }
@@ -162,29 +71,31 @@ const DriverDetails = () => {
           />
         </View>
       ) : (
-        <View style={[styles.header, { backgroundColor: teamColor }]}>
-          <View style={styles.logoContainer}>
-            {team && (
-              <ImageBackground
-                style={styles.logo}
-                resizeMode="contain"
-                source={{ uri: team.logo }}
-              />
-            )}
-          </View>
-          <View style={styles.driverContainer}>
-            <View style={styles.driverInfo}>
-              <Text style={styles.driverNumber}>{driver?.number}</Text>
-              <Text style={styles.driverName}>{driver?.name}</Text>
+        <View style={{ flex: 1 }}>
+          <View style={[styles.header, { backgroundColor: teamColor }]}>
+            <View style={styles.logoContainer}>
+              {team && (
+                <ImageBackground
+                  style={styles.logo}
+                  resizeMode="contain"
+                  source={{ uri: team.logo }}
+                />
+              )}
             </View>
-            <View>
-              <Image
-                style={styles.driverPhoto}
-                source={{ uri: driver?.image }}
-                resizeMode="cover"
-                height={160}
-                width={140}
-              />
+            <View style={styles.driverContainer}>
+              <View style={styles.driverInfo}>
+                <Text style={styles.driverNumber}>{driver?.number}</Text>
+                <Text style={styles.driverName}>{driver?.name}</Text>
+              </View>
+              <View>
+                <Image
+                  style={styles.driverPhoto}
+                  source={{ uri: driver?.image }}
+                  resizeMode="cover"
+                  height={160}
+                  width={140}
+                />
+              </View>
             </View>
           </View>
           <View style={styles.driverInfoContainer}>
@@ -203,6 +114,48 @@ const DriverDetails = () => {
                 <Text style={{ color: 'white' }}>Career Points</Text>
               </View>
             </View>
+          </View>
+          <View style={{ width: width / 4, marginTop: 12 }}>
+            <SelectDropdown
+              data={driver?.teams || []}
+              onSelect={(selectedItem, index) => {
+                setSeasons(selectedItem);
+              }}
+              renderButton={(selectedItem, isOpened) => {
+                return (
+                  <View style={styles.dropdownButtonStyle}>
+                    <Text style={styles.dropdownButtonTxtStyle}>
+                      {(selectedItem && selectedItem?.season) || seasons?.season || 'Teams'}
+                    </Text>
+                  </View>
+                );
+              }}
+              renderItem={(item, index, isSelected) => {
+                return (
+                  <View
+                    style={{
+                      ...styles.dropdownItemStyle,
+                      ...(isSelected && { backgroundColor: '#D2D9DF' }),
+                    }}>
+                    <Text style={styles.dropdownItemTxtStyle}>{item?.season}</Text>
+                  </View>
+                );
+              }}
+              showsVerticalScrollIndicator={false}
+              dropdownStyle={styles.dropdownMenuStyle}
+            />
+          </View>
+          <View style={{ backgroundColor: teamColor, borderRadius: 24, marginTop: 12 }}>
+            <Image
+              source={{
+                uri: seasons?.team?.logo,
+              }}
+              resizeMode="contain"
+              style={{
+                width: '100%',
+                height: 200,
+              }}
+            />
           </View>
         </View>
       )}
@@ -306,6 +259,53 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 26,
     fontWeight: 'bold',
+  },
+
+  // Dropdown
+  dropdownButtonStyle: {
+    width: width / 4,
+    height: 50,
+    backgroundColor: '#E9ECEF',
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+  },
+  dropdownButtonTxtStyle: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#151E26',
+  },
+  dropdownButtonArrowStyle: {
+    fontSize: 28,
+  },
+  dropdownButtonIconStyle: {
+    fontSize: 28,
+    marginRight: 8,
+  },
+  dropdownMenuStyle: {
+    backgroundColor: '#E9ECEF',
+    borderRadius: 8,
+  },
+  dropdownItemStyle: {
+    width: '100%',
+    flexDirection: 'row',
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  dropdownItemTxtStyle: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '500',
+    color: '#151E26',
+  },
+  dropdownItemIconStyle: {
+    fontSize: 28,
+    marginRight: 8,
   },
 });
 
