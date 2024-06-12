@@ -164,7 +164,13 @@ const DriverDetails = () => {
       ) : (
         <View style={[styles.header, { backgroundColor: teamColor }]}>
           <View style={styles.logoContainer}>
-            {team && <ImageBackground style={styles.logo}  resizeMode='contain' source={{ uri: team.logo }}  />}
+            {team && (
+              <ImageBackground
+                style={styles.logo}
+                resizeMode="contain"
+                source={{ uri: team.logo }}
+              />
+            )}
           </View>
           <View style={styles.driverContainer}>
             <View style={styles.driverInfo}>
@@ -181,12 +187,21 @@ const DriverDetails = () => {
               />
             </View>
           </View>
-          <View>
-            <Text style={{ color: 'white' }}>Since Debut</Text>
-            <View>
-              <Text style={{ color: 'white' }}>{driver?.career_points}</Text>
-              <Text style={{ color: 'white' }}>{driver?.podiums}</Text>
-              <Text style={{ color: 'white' }}>{driver?.world_championships}</Text>
+          <View style={styles.driverInfoContainer}>
+            <Text style={styles.headerDebut}>Since Debut</Text>
+            <View style={styles.driverPerformanceContainer}>
+              <View style={styles.performanceContainer}>
+                <Text style={styles.driverScore}>{driver?.podiums}</Text>
+                <Text style={{ color: 'white' }}>Podiums</Text>
+              </View>
+              <View style={styles.performanceContainer}>
+                <Text style={styles.driverScore}>{driver?.world_championships}</Text>
+                <Text style={{ color: 'white' }}>Titles</Text>
+              </View>
+              <View style={styles.performanceContainer}>
+                <Text style={styles.driverScore}>{driver?.career_points}</Text>
+                <Text style={{ color: 'white' }}>Career Points</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -228,9 +243,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: 'contain',
-    top:120,
+    top: 120,
     opacity: 0.3,
-    
   },
   driverContainer: {
     flexDirection: 'row',
@@ -265,6 +279,33 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     bottom: 12,
     right: 20,
+  },
+  driverInfoContainer: {
+    width: width,
+  },
+  headerDebut: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 10,
+    alignItems: 'flex-start',
+  },
+  driverPerformanceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: width * 0.9,
+    height: height * 0.1,
+  },
+  performanceContainer: {
+    borderLeftWidth: 3,
+    borderColor: 'red',
+    padding: 10,
+  },
+  driverScore: {
+    color: 'white',
+    fontSize: 26,
+    fontWeight: 'bold',
   },
 });
 
