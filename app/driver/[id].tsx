@@ -2,6 +2,9 @@
 import { View, Text, StyleSheet, Dimensions, ImageBackground, Image } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 
+// Icons
+import { Entypo } from '@expo/vector-icons';
+
 // Navigation
 import { useLocalSearchParams } from 'expo-router';
 
@@ -56,7 +59,7 @@ const DriverDetails = () => {
     }
   }, [id]);
 
-  const teamColor = teamColors[team?.name || ''] || '#DC0000';
+  const teamColor = teamColors[seasons?.team?.name || ''] || '#DC0000';
 
   return (
     <View style={styles.container}>
@@ -78,7 +81,7 @@ const DriverDetails = () => {
                 <ImageBackground
                   style={styles.logo}
                   resizeMode="contain"
-                  source={{ uri: team.logo }}
+                  source={{ uri: seasons?.team?.logo }}
                 />
               )}
             </View>
@@ -127,6 +130,11 @@ const DriverDetails = () => {
                     <Text style={styles.dropdownButtonTxtStyle}>
                       {(selectedItem && selectedItem?.season) || seasons?.season || 'Teams'}
                     </Text>
+                    <Entypo
+                      name={isOpened ? 'chevron-small-up' : 'chevron-small-down'}
+                      color="black"
+                      style={styles.dropdownButtonArrowStyle}
+                    />
                   </View>
                 );
               }}
@@ -145,7 +153,12 @@ const DriverDetails = () => {
               dropdownStyle={styles.dropdownMenuStyle}
             />
           </View>
-          <View style={{ backgroundColor: teamColor, borderRadius: 24, marginTop: 12 }}>
+          <View
+            style={{
+              backgroundColor: teamColors[seasons?.team?.name || ''] || '#DC0000',
+              borderRadius: 24,
+              marginTop: 28,
+            }}>
             <Image
               source={{
                 uri: seasons?.team?.logo,
@@ -235,12 +248,13 @@ const styles = StyleSheet.create({
   },
   driverInfoContainer: {
     width: width,
+    marginTop: 24,
   },
   headerDebut: {
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginVertical: 16,
     alignItems: 'flex-start',
   },
   driverPerformanceContainer: {
@@ -271,6 +285,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 12,
+    marginTop: 20,
   },
   dropdownButtonTxtStyle: {
     flex: 1,
