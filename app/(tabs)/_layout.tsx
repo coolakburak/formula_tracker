@@ -28,25 +28,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'News',
+          title: 'Circuits',
           tabBarIcon: ({ color, focused }) => (
-            <FontAwesome6
-              name="newspaper"
-              size={iconSize}
-              color={focused ? activeColor : inactiveColor}
-            />
-          ),
-          headerStyle: { backgroundColor: headerBackgroundColor },
-          headerTintColor: '#fff',
-        }}
-      />
-      <Tabs.Screen
-        name="racing"
-        options={{
-          title: 'Racing',
-          tabBarIcon: ({ color, focused }) => (
-            <FontAwesome6
-              name="flag-checkered"
+            <MaterialCommunityIcons
+              name="go-kart-track"
               size={iconSize}
               color={focused ? activeColor : inactiveColor}
             />

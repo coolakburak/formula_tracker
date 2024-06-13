@@ -3,6 +3,9 @@ import { View, FlatList, StyleSheet, Pressable, Text, Dimensions } from 'react-n
 // Components
 import { Container, DriverCard } from '~/components';
 
+// Icons
+import { Entypo } from '@expo/vector-icons';
+
 // Api
 import { fetchDrivers } from '~/api/get';
 
@@ -18,7 +21,7 @@ import { useRouter } from 'expo-router';
 // Picker
 import SelectDropdown from 'react-native-select-dropdown';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const Standings = () => {
   const [drivers, setDrivers] = useState<DriverRanking[]>([]);
@@ -77,35 +80,51 @@ const Standings = () => {
           />
         </View>
       )}
-      <SelectDropdown
-        data={seasons || []}
-        onSelect={(selectedItem, index) => {
-          setSeason(selectedItem?.title);
-        }}
-        renderButton={(selectedItem, isOpened) => {
-          return (
-            <View style={styles.dropdownButtonStyle}>
-              <Text style={styles.dropdownButtonTxtStyle}>
-                {(selectedItem && selectedItem?.title) || seasons[0]?.title || 'Teams'}
-              </Text>
-            </View>
-          );
-        }}
-        renderItem={(item, index, isSelected) => {
-          return (
-            <View
-              style={{
-                ...styles.dropdownItemStyle,
-                ...(isSelected && { backgroundColor: '#D2D9DF' }),
-              }}>
-              <Text style={styles.dropdownItemTxtStyle}>{item?.title}</Text>
-            </View>
-          );
-        }}
-        showsVerticalScrollIndicator={false}
-        dropdownStyle={styles.dropdownMenuStyle}
-      />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          width: '100%',
+          backgroundColor: 'transparent',
+          zIndex: 1000,
+        }}>
+        <SelectDropdown
+          data={seasons || []}
+          onSelect={(selectedItem, index) => {
+            setSeason(selectedItem?.title);
+          }}
+          renderButton={(selectedItem, isOpened) => {
+            return (
+              <View style={styles.dropdownButtonStyle}>
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {(selectedItem && selectedItem?.title) || seasons[0]?.title || 'Teams'}
+                </Text>
+                <Entypo
+                  name={isOpened ? 'chevron-small-up' : 'chevron-small-down'}
+                  color="black"
+                  style={styles.dropdownButtonArrowStyle}
+                />
+              </View>
+            );
+          }}
+          renderItem={(item, index, isSelected) => {
+            return (
+              <View
+                style={{
+                  ...styles.dropdownItemStyle,
+                  ...(isSelected && { backgroundColor: '#D2D9DF' }),
+                }}>
+                <Text style={styles.dropdownItemTxtStyle}>{item?.title}</Text>
+              </View>
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+          dropdownStyle={styles.dropdownMenuStyle}
+        />
+      </View>
+
       <FlatList
+        key={season}
         data={drivers}
         renderItem={({ item, index }) => (
           <Pressable
@@ -118,7 +137,7 @@ const Standings = () => {
               })
             }>
             <DriverCard
-              key={item?.driver?.id}
+              key={`${season}-${item?.driver?.id}`}
               name={item?.driver?.name}
               number={item?.driver?.number}
               team={item?.team}
@@ -160,7 +179,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 12,
-    marginVertical: 12,
+    marginTop: 12,
+    marginBottom: 20,
     alignSelf: 'flex-end',
   },
   dropdownButtonTxtStyle: {
