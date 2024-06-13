@@ -21,11 +21,11 @@ export interface DriverDetail {
   birthplace: string;
   number: number;
   grands_prix_entered: number;
-  world_championships: number;
-  podiums: number;
-  highest_race_finish: HighestRaceFinish;
+  world_championships: number; //
+  podiums: number; //
+  highest_race_finish: HighestRaceFinish; 
   highest_grid_position: number;
-  career_points: string;
+  career_points: string; //
   teams: Team[];
 }
 
