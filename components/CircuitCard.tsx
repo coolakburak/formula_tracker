@@ -8,26 +8,16 @@ interface ICircuitCardProps {
   id: number;
   name: string;
   image: string;
-  //   competition: Competition;
   first_grand_prix?: number;
   laps?: number;
   length: string;
   race_distance?: string;
-  //   lap_record: LapRecord;
   capacity?: number;
   opened?: number;
   owner?: string;
 }
 
 const CircuitCard: React.FC<ICircuitCardProps> = ({ id, name, image, laps, length }) => {
-  //   const teamColor = teamColors[team.name] || '#DC0000';
-
-  function truncateString(str: string): string {
-    if (str.length > 15) {
-      return str.substring(0, 20) + '...';
-    }
-    return str;
-  }
   return (
     <Animated.View entering={BounceInRight.delay(400 * (id + 1))}>
       <LinearGradient
