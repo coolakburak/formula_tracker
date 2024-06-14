@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import Animated, { BounceInRight } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
-import { teamColors } from '~/constants/TeamColors';
 
 interface ICircuitCardProps {
   id: number;
@@ -28,7 +27,7 @@ const CircuitCard: React.FC<ICircuitCardProps> = ({ id, name, image, laps, lengt
         <View style={styles.circuitContainer}>
           <Text style={styles.circuitName}>{name}</Text>
           <View>
-            <Text style={styles.circuitLaps}>{laps}</Text>
+            <Text style={styles.circuitLaps}>{laps} Laps</Text>
             <Text style={styles.circuitLength}>{length}</Text>
           </View>
         </View>

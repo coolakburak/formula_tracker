@@ -1,5 +1,13 @@
 // export default DriverDetails;
-import { View, Text, StyleSheet, Dimensions, ImageBackground, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 
 // Icons
@@ -23,6 +31,8 @@ import { teamColors } from '~/constants/TeamColors';
 // Picker
 import SelectDropdown from 'react-native-select-dropdown';
 
+import { useNavigation } from '@react-navigation/native';
+
 const { height, width } = Dimensions.get('window');
 
 const DriverDetails = () => {
@@ -32,6 +42,7 @@ const DriverDetails = () => {
   const [team, setTeam] = useState<Team2 | undefined>();
   const [seasons, setSeasons] = useState<Team | undefined>();
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (id) {
@@ -75,6 +86,10 @@ const DriverDetails = () => {
         </View>
       ) : (
         <View style={{ flex: 1 }}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.backButton}>Back</Text>
+          </TouchableOpacity>
+
           <View style={[styles.header, { backgroundColor: teamColor }]}>
             <View style={styles.logoContainer}>
               {team && (
@@ -321,6 +336,15 @@ const styles = StyleSheet.create({
   dropdownItemIconStyle: {
     fontSize: 28,
     marginRight: 8,
+  },
+  backButton: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginTop: 20,
+    width: 50,
+    borderRadius: 5,
   },
 });
 

@@ -55,21 +55,7 @@ export default function TabLayout() {
           headerTintColor: '#fff',
         }}
       />
-      <Tabs.Screen
-        name="favourites"
-        options={{
-          title: 'Favourites',
-          tabBarIcon: ({ color, focused }) => (
-            <MaterialIcons
-              name="favorite-outline"
-              size={iconSize}
-              color={focused ? activeColor : inactiveColor}
-            />
-          ),
-          headerStyle: { backgroundColor: headerBackgroundColor },
-          headerTintColor: '#fff',
-        }}
-      />
+     
     </Tabs>
   );
 }

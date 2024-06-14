@@ -23,16 +23,14 @@ export default function News() {
       <FlatList
         data={circuits}
         renderItem={({ item }) => (
-          <Pressable onPress={() => router.push(`/circuit/${item?.id}`)}>
-            <CircuitCard
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              first_grand_prix={item.first_grand_prix}
-              laps={item.laps}
-              length={item.length}
-            />
-          </Pressable>
+          <CircuitCard
+            id={item.id}
+            name={item.name}
+            image={item.image}
+            first_grand_prix={item.first_grand_prix}
+            laps={item.laps}
+            length={item.length}
+          />
         )}
         keyExtractor={(item) => item.id.toString()}
       />
